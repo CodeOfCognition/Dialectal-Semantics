@@ -11,5 +11,5 @@ This project entailed the training of deep learning language models (word2vec) a
 - Michelle Yang
 
 ### Datasets
-- (North American News Text Corpus [(NANTeC)](https://catalog.ldc.upenn.edu/LDC95T21)
-- [Indiccorp](https://indicnlp.ai4bharat.org/home/)
+- [North American News Text Corpus (NANTeC)](https://catalog.ldc.upenn.edu/LDC95T21)
+- [IndicCorp](https://indicnlp.ai4bharat.org/home/)
