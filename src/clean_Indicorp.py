@@ -24,9 +24,9 @@ def clean_line(line):
         
         # begin character level analysis
         for character in token:
-            # replace numbers with "num"
+            # remove tokens containing numbers
             if character in nums:
-                return "num"
+                return ""
             # replace comma with a space. Sentences like this appear: "However,he was there"
             if character == ",":
                 token = token.replace(character, " ")
@@ -56,12 +56,11 @@ def clean_line(line):
     for token in line.split():
         cleanLine += clean_token(token) + " "
     # replace double spaces
-    cleanLine = re.sub("  ", " ", cleanLine)
+    cleanLine = re.sub(r" +", " ", cleanLine)
+    # remove spaces before periods.
+    cleanLine = re.sub(r" +\.", ".", cleanLine)
     # eliminate single word sentences
     if len(cleanLine) <= 1:
-        return "-1"
-    # eliminate sentences with 4 consecutive numbers
-    elif "num num num num" in cleanLine:
         return "-1"
     # return sentence (final whitespace in sentence removed, period appended)
     else:
@@ -72,13 +71,12 @@ def main():
 
     start_time = time.time()
     count = 0
-    totalWords = 50
     agg = ""
-    outfile = os.path.join(parentdir, "data", "clean_corpora", "indicorp_clean_test.txt")
+    outfile = os.path.join(parentdir, "data", "clean_corpora", "indicorp_clean_large.txt")
 
-    with open(os.path.join(parentdir, "data", "indicorp", "en", "test_og.txt")) as myfile:
-        while count < totalWords:
-            cleanLine = clean_line(next(myfile)) + " "
+    with open(os.path.join(parentdir, "data", "indicorp", "en", "en.txt")) as myfile:
+        for line in myfile:
+            cleanLine = clean_line(line) + " "
             if not cleanLine == "-1 ":
                 agg += cleanLine + "\n"
                 count += len(cleanLine.split())

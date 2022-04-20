@@ -17,12 +17,12 @@ def extractFileData(file_text):
     def clean_token(token):
         # begin character level analysis
         for character in token:
-            # replace numbers with "num"
+            # remove numbers
             if character in nums:
                 if token.endswith("."):
-                    return "num."
+                    return "."
                 else:
-                    return "num"
+                    return ""
             # replace comma with a space. Sentences like this appear: "However,he was there"
             if character == ",":
                 token = token.replace(character, " ")
@@ -79,7 +79,6 @@ def extractFileData(file_text):
     for token in data:
         clean_data += clean_token(token) + " "
     
-    clean_data = re.sub('[^.]* num num num num [^.]*\.', "", clean_data) # removes sentences containing num 4 consecutive times
     clean_data = re.sub('(?<=(\. ))(\w+\.)(?=\s)', "", clean_data) # removes single word sentences
     clean_data = re.sub('\.+ \.', ". ", clean_data) # removes null sentences. .Like this
     clean_data = re.sub(' +', ' ', clean_data) # removes multiple spaces
